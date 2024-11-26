@@ -1,0 +1,12 @@
+{
+    "game": {
+        "columns": [
+            "who_plys_who",
+            "game_id",
+            "players",
+            "queue",
+            "game_state"
+        ],
+        "data": {}
+    }
+}
