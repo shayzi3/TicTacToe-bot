@@ -3,7 +3,7 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 
-from bot import start
+from bot import start, echo
 
 
 
@@ -12,7 +12,8 @@ async def main():
      dp = Dispatcher()
      
      dp.include_routers(
-          start.start_router
+          start.start_router,
+          echo.echo_router
      )
      await dp.start_polling(bot)
      
