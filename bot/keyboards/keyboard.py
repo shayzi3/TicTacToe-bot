@@ -9,10 +9,14 @@ start_game_button = [
 end_game_button = [
      [KeyboardButton(text='Завершить игру')]
 ]
+quit_from_queue = [
+     [KeyboardButton(text='Выход')]
+]
 
 class Buttons(Enum):
      START_GAME_BUTTON = start_game_button
      END_GAME_BUTTON = end_game_button
+     QUIT_FROM_QUEUE = quit_from_queue
 
 
 

@@ -13,6 +13,6 @@ start_router = Router(name=__name__)
 @start_router.message(CommandStart())
 async def start(message: Message) -> SendMessage:
      return await message.answer(
-          text="Приветвую тебя в боте для игры в Крестики Нолики!",
+          text='Приветвую тебя в боте для игры в Крестики Нолики!',
           reply_markup=get_reply_markup(Buttons.START_GAME_BUTTON)
      )
