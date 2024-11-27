@@ -1,4 +1,4 @@
-from orm_json import JsonOrm, Column, DataArgs
+from orm_json import JsonOrm, Column, Insert
 
 
 
@@ -7,14 +7,29 @@ class Game(JsonOrm):
      players: Column
      game_state: Column
      queue: Column
-     who_plys_who: Column
+     who_plays_who: Column
      
-     class Data(DataArgs):
+     class Data:
           tablename = 'game'
           primary = 'game_id'
           path = 'data/games.json'
           
           
+class Free(JsonOrm):
+     players_in_online: Column
+     gamers: Column
+     
+     class Data:
+          tablename = 'free'
+          path = 'data/games.json'
+          free = True
+          
+          
 if __name__ == '__main__':
      JsonOrm.create_tables()
+     
+     Insert(Free).values(
+          players_in_online = [],
+          gamers = {}
+     )
           

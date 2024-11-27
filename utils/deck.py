@@ -1,26 +1,33 @@
-from typing import Any, Callable
+from typing import Any
 
 
 
+def hashing(class_: type):
+     hashed_class = {}
+     
+     def wrapper(*args, **kwargs):
+          if class_.__name__ not in hashed_class:
+               hashed_class[class_.__name__] = class_(*args, **kwargs)
+          return hashed_class[class_.__name__]
+     return wrapper
 
+
+@hashing
 class Queue:
-     queue: list[Any] = []
+     def __init__(self) -> None:
+          self.queue: list[Any] = []
           
-     @classmethod
-     def add(cls, id: Any) -> None:
-          cls.queue.append(id)
+     def add(self, id: tuple[Any]) -> None:
+          self.queue.append(id)
           
-          
-     @classmethod
-     def remove(cls) -> Any:
-          return cls.queue.pop(0)
+     def remove(self) -> tuple[Any]:
+          if self.queue:
+               return self.queue.pop(0)
+          return None, None
      
+     def is_empty(self) -> bool:
+          return not self.queue
      
-     @classmethod
-     def is_empty(cls) -> bool:
-          return not cls.queue
-     
-     @classmethod
-     def __str__(cls) -> str:
-          return f'Queue({" ".join(str(element) for element in cls.queue).strip()})'
+     def __str__(self) -> str:
+          return f'Queue({" ".join(str(element) for element in self.queue).strip()})'
      

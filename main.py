@@ -1,6 +1,7 @@
 import os
 import asyncio
 
+from loguru import logger
 from aiogram import Bot, Dispatcher
 
 from bot import start, echo
@@ -15,6 +16,7 @@ async def main():
           start.start_router,
           echo.echo_router
      )
+     logger.info("BOT STARTED SUCCESS...")
      await dp.start_polling(bot)
      
      

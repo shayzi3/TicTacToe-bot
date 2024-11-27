@@ -1,12 +1,16 @@
 {
     "game": {
         "columns": [
-            "who_plys_who",
-            "game_id",
+            "who_plays_who",
             "players",
             "queue",
+            "game_id",
             "game_state"
         ],
         "data": {}
+    },
+    "free": {
+        "players_in_online": [],
+        "gamers": {}
     }
 }

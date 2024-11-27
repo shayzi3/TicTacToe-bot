@@ -1,9 +1,11 @@
 
-from .models import Game
-from .base import MethodsForGame
+from .models import Game, Free
+from .base import methods_free, methods_game
 
 
 __all__ = [
      "Game",
-     "MethodsForGame"
+     "Free",
+     "methods_free",
+     "methods_game"
 ]
