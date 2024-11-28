@@ -22,7 +22,6 @@ class MethodsForGame:
           letters = ascii_letters + digits + ascii_uppercase
           return ''.join([random.choice(letters) for _ in range(8)])
      
-     
      def insert_data(
           self, 
           first: int, 
@@ -57,6 +56,29 @@ class MethodsForGame:
                who_plays_who=who_plays_who,
                players=players
           )
+          
+     @staticmethod
+     def get_data_about_game(game_id: str) -> Game:
+          return Select(Game).where(game_id=game_id).one()
+          
+          
+     @staticmethod
+     def update_game(game_id: str, game_state: list, queue: int) -> None:
+          return Update(Game).where(game_id=game_id).values(game_state=game_state, queue=queue)
+     
+     @staticmethod
+     def delete_game(game_id: str) -> None:
+          return Delete(Game).drop_one_data(game_id=game_id)
+     
+     
+     @staticmethod
+     def get_game_id(player: int) -> str:
+          
+          @custom_option(model=Game)
+          def check_game_id(players) -> bool:
+               return str(player) in players.keys()
+          
+          return Select(Game).custom_options(check_game_id).one().game_id
           
           
 class MethodsForFree:

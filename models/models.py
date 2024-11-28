@@ -25,11 +25,14 @@ class Free(JsonOrm):
           free = True
           
           
-if __name__ == '__main__':
+def function_main():
      JsonOrm.create_tables()
      
      Insert(Free).values(
           players_in_online = [],
           gamers = {}
      )
+          
+if __name__ == '__main__':
+     function_main()
           

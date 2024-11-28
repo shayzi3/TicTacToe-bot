@@ -8,3 +8,10 @@ class GameObject:
      game_state: list[list[int]]
      queue: int
      who_plys_who: dict[str, str]
+     
+     
+@dataclass
+class GameButtons:
+     game_id: str
+     position_list: int
+     position_index: int

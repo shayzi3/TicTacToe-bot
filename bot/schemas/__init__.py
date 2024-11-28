@@ -1,7 +1,8 @@
 
-from .schema import GameObject
+from .schema import GameObject, GameButtons
 
 
 __all__ = [
-     "GameObject"
+     "GameObject",
+     "GameButtons"
 ]
