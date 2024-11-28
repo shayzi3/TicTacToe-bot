@@ -12,7 +12,7 @@ class Game(JsonOrm):
      class Data:
           tablename = 'game'
           primary = 'game_id'
-          path = 'data/games.json'
+          path = '/data/games.json'
           
           
 class Free(JsonOrm):
@@ -21,7 +21,7 @@ class Free(JsonOrm):
      
      class Data:
           tablename = 'free'
-          path = 'data/games.json'
+          path = '/data/games.json'
           free = True
           
           

@@ -35,7 +35,7 @@ async def double_send(
 async def edit_inline_button(
      text: str,
      players_id: list[int],
-     inline_markup: InlineKeyboardMarkup,
+     inline_markup: InlineKeyboardMarkup | None = None,
 ) -> None:
      hash_id = HashMessageID()
      
