@@ -1,6 +1,5 @@
 
 
-
 combinations = [
      [0, 0, 0],
      [1, 1, 1],
@@ -17,21 +16,26 @@ async def analysis_game_state(
      who = {}
      for key, value in who_play_who.items():
           who[value] = key
-          
-     new = []     
-     winner = None
-     for comba in combinations:
-          new.append([game_state[0][comba[0]], game_state[1][comba[1]], game_state[2][comba[2]]])
-     new += game_state
-     
+       
      count = 0
-     for comba in new:
-          if len(set(comba)) == 1:
-               winner = comba[0]
-          
-          if None not in comba:
+     winner = None   
+     for combo in game_state:
+          if None not in combo: 
+               if len(set(combo)) == 1:
+                    winner = combo[0]
+                    break
                count += 1
      
-     if count == len(new):
+     if not winner:
+          for combo in combinations:
+               state = [game_state[0][combo[0]], game_state[1][combo[1]], game_state[2][combo[2]]]
+               
+               if None not in state:
+                    if len(set(state)) == 1:
+                         winner = state[0]
+                         break
+                    count += 1
+     
+     if count == len(combinations) + len(game_state):
           return True
-     return who.get(winner) if who.get(winner) else None
+     return who.get(winner)

@@ -2,9 +2,9 @@
     "game": {
         "columns": [
             "players",
-            "queue",
             "game_state",
             "who_plays_who",
+            "queue",
             "game_id"
         ],
         "data": {}
@@ -12,13 +12,8 @@
     "free": {
         "players_in_online": [
             2054556183,
-            5747850064,
-            2054556183,
-            5747850064
+            2054556183
         ],
-        "gamers": {
-            "5747850064": 2054556183,
-            "2054556183": 5747850064
-        }
+        "gamers": {}
     }
 }
