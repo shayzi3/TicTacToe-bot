@@ -1,16 +1,17 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.types import CallbackQuery
 from aiogram.methods import AnswerCallbackQuery
 
-from bot.buttons import ButtonData, build_buttons
-from bot.schemas import GameButtons
-from bot.keyboards import get_reply_markup, Buttons
+from buttons import ButtonData, build_buttons
+from schemas import GameButtons
+from keyboards import get_reply_markup, Buttons
 from models import methods_game, methods_free
 from utils import (
      analysis_game_state, 
      clear_data, 
      double_send,
-     edit_inline_button
+     edit_inline_button,
+     double_delete
 )
 
 
@@ -19,7 +20,7 @@ callback_router = Router(name=__name__)
 
 
 
-@callback_router.callback_query(ButtonData.filter())
+@callback_router.callback_query(ButtonData.filter(F.smile == '🟥'))
 async def callback_query_handler(
      query: CallbackQuery, 
      callback_data: ButtonData
@@ -58,7 +59,9 @@ async def callback_query_handler(
           who_play_who=game.who_plays_who
      )
      if winner:
-          await query.message.delete()
+          await double_delete(
+               players_id=list(game.players.keys())
+          )
           
           text = f'Игра закончилась в ничью!'
           if isinstance(winner, str):

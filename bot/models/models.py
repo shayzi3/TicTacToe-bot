@@ -1,3 +1,5 @@
+
+from loguru import logger
 from orm_json import JsonOrm, Column, Insert
 
 
@@ -12,7 +14,7 @@ class Game(JsonOrm):
      class Data:
           tablename = 'game'
           primary = 'game_id'
-          path = '/data/games.json'
+          path = 'data/games.json'
           
           
 class Free(JsonOrm):
@@ -21,7 +23,7 @@ class Free(JsonOrm):
      
      class Data:
           tablename = 'free'
-          path = '/data/games.json'
+          path = 'data/games.json'
           free = True
           
           
@@ -32,6 +34,7 @@ def function_main():
           players_in_online = [],
           gamers = {}
      )
+     logger.info('JSON FILE CREATED SUCCESS')
           
 if __name__ == '__main__':
      function_main()

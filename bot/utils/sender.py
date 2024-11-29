@@ -47,3 +47,16 @@ async def edit_inline_button(
                     message_id=hash_id.get(user_id),
                     reply_markup=inline_markup
                )
+               
+
+async def double_delete(
+     players_id: int
+) -> None:
+     hash_message = HashMessageID()
+     
+     async with Bot(os.environ.get('TOKEN')) as bot:
+          for user_id in players_id:
+               await bot.delete_message(
+                    chat_id=int(user_id),
+                    message_id=hash_message.get(user_id)
+               )

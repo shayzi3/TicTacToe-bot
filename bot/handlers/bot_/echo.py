@@ -3,8 +3,8 @@ from aiogram.types import Message
 from aiogram.methods import SendMessage
 from aiogram import Router
 
-from bot.keyboards import Buttons, get_reply_markup
-from bot.buttons import build_buttons
+from keyboards import Buttons, get_reply_markup
+from buttons import build_buttons
 from utils import Queue, double_send, clear_data
 from models import methods_game, methods_free
 

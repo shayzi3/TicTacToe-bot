@@ -12,6 +12,7 @@ class GameObject:
      
 @dataclass
 class GameButtons:
+     smile: str
      game_id: str
      position_list: int
      position_index: int

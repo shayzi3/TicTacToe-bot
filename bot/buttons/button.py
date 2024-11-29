@@ -6,6 +6,7 @@ from aiogram.types import InlineKeyboardMarkup
 
 
 class ButtonData(CallbackData, prefix='game'):
+     smile: str
      game_id: str
      position_list: int
      position_index: int
@@ -27,7 +28,8 @@ def build_buttons(
                     callback_data=ButtonData(
                          game_id=game_id,
                          position_list=state_index,
-                         position_index=item_index
+                         position_index=item_index,
+                         smile=text
                     ).pack()
                )
      builder.adjust(3)

@@ -4,7 +4,7 @@ from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.methods import SendMessage
 
-from bot.keyboards import Buttons, get_reply_markup
+from keyboards import Buttons, get_reply_markup
 from models import methods_free
 
 

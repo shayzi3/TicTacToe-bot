@@ -4,7 +4,7 @@ import asyncio
 from loguru import logger
 from aiogram import Bot, Dispatcher
 
-from bot import start, echo, callback
+from handlers import start, echo, callback
 from models import function_main
 
 
