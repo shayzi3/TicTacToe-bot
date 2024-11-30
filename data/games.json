@@ -1,16 +1,22 @@
 {
     "game": {
         "columns": [
-            "game_state",
-            "game_id",
             "queue",
+            "who_plays_who",
             "players",
-            "who_plays_who"
+            "game_state",
+            "game_id"
         ],
         "data": {}
     },
     "free": {
-        "gamers": {},
-        "players_in_online": []
+        "players_in_online": [
+            5747850064,
+            2054556183
+        ],
+        "gamers": {
+            "2054556183": 5747850064,
+            "5747850064": 2054556183
+        }
     }
 }

@@ -22,7 +22,7 @@ def build_buttons(
      for state_index in range(3):
           for item_index in range(3):
                item = game_state[state_index][item_index]
-               text = '🟥' if item is None else item
+               text = '◻️' if item is None else item
                builder.button(
                     text=text,
                     callback_data=ButtonData(

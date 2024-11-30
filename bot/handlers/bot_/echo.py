@@ -29,12 +29,12 @@ async def echo(message: Message) -> None | SendMessage:
                     reply_markup=get_reply_markup(Buttons.QUIT_FROM_QUEUE)
                )
                
+          player_id, player_name = queue.remove() # Очищаю очередь
+          
           logger.info(
-              f'''User {message.from_user.id}-{message.from_user.full_name}'
-               f'started game with {message.from_user.id}-{message.from_user.full_name}'''
+              f'User {message.from_user.id}-{message.from_user.full_name} started game with {player_id}-{player_name}'
           )
           
-          player_id, player_name = queue.remove() # Очищаю очередь
           # Добавляю игроков в словарь геймеров чтобы пользовать этим при завершении игры
           methods_free.update_gamers(
                first_id=message.from_user.id,

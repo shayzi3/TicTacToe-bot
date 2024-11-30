@@ -20,7 +20,7 @@ callback_router = Router(name=__name__)
 
 
 
-@callback_router.callback_query(ButtonData.filter(F.smile == '🟥'))
+@callback_router.callback_query(ButtonData.filter(F.smile == '◻️'))
 async def callback_query_handler(
      query: CallbackQuery, 
      callback_data: ButtonData
