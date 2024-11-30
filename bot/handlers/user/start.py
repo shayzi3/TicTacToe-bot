@@ -1,4 +1,5 @@
 
+from loguru import logger
 from aiogram.types import Message
 from aiogram import Router
 from aiogram.filters import CommandStart
@@ -17,6 +18,9 @@ async def start(message: Message) -> SendMessage:
      if not methods_free.free_check(message.from_user.id): # Не находится в поиске или игре
           reply = get_reply_markup(Buttons.START_GAME_BUTTON)
      
+     logger.info(
+          f'command start for user {message.from_user.id}-{message.from_user.full_name}.'
+     )
      return await message.answer(
           text='Приветвую тебя в боте для игры в Крестики Нолики!',
           reply_markup=reply

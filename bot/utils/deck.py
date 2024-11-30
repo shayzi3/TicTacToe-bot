@@ -1,3 +1,5 @@
+
+from loguru import logger
 from typing import Any
 
 
@@ -20,8 +22,12 @@ class Queue:
      def add(self, id: tuple[Any]) -> None:
           self.queue.append(id)
           
+          logger.debug(f'add user to queue {id}')
+          
      def remove(self) -> tuple[Any]:
           if self.queue:
+               logger.debug(f'delete user from queue {self.queue[0][0]}-{self.queue[0][1]}')
+               
                return self.queue.pop(0)
           return None, None
      

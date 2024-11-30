@@ -1,4 +1,5 @@
 
+from loguru import logger
 from aiogram.types import Message
 from aiogram.methods import SendMessage
 from aiogram import Router
@@ -28,8 +29,12 @@ async def echo(message: Message) -> None | SendMessage:
                     reply_markup=get_reply_markup(Buttons.QUIT_FROM_QUEUE)
                )
                
-          player_id, player_name = queue.remove() # Очищаю очередь
+          logger.info(
+              f'''User {message.from_user.id}-{message.from_user.full_name}'
+               f'started game with {message.from_user.id}-{message.from_user.full_name}'''
+          )
           
+          player_id, player_name = queue.remove() # Очищаю очередь
           # Добавляю игроков в словарь геймеров чтобы пользовать этим при завершении игры
           methods_free.update_gamers(
                first_id=message.from_user.id,
@@ -57,6 +62,10 @@ async def echo(message: Message) -> None | SendMessage:
           gamer_two = methods_free.check_gamer(message.from_user.id)  # Достаю id второго игрока
           game_id = methods_game.get_game_id(message.from_user.id)
           
+          logger.info(
+               f'User {message.from_user.id}-{message.from_user.full_name} finished game-{game_id}'
+          )
+          
           methods_free.free_update(
                id=[message.from_user.id, gamer_two], 
                mode='remove'
@@ -78,7 +87,12 @@ async def echo(message: Message) -> None | SendMessage:
           )
           
      if message.text == 'Выход':
-          queue.remove()  # Удаляю игрока из очереди
+          player_id, _ = queue.remove()  # Удаляю игрока из очереди
+          methods_free.free_update(
+               id=player_id,
+               mode='remove'
+          ) # Удаляю из онлайна
+          
           await message.reply(
                text='Вы вышли из очереди.',
                reply_markup=get_reply_markup(Buttons.START_GAME_BUTTON)

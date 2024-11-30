@@ -1,7 +1,7 @@
 import os
 
 from aiogram import Bot
-from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup, CallbackQuery
+from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 from utils import HashMessageID
           
      
