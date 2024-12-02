@@ -6,7 +6,7 @@ from aiogram import Router
 
 from keyboards import Buttons, get_reply_markup
 from buttons import build_buttons
-from utils import Queue, double_send, clear_data
+from utils import Queue, double_send, clear_data, clear_users_update
 from models import methods_game, methods_free
 
 
@@ -20,8 +20,10 @@ async def echo(message: Message) -> None | SendMessage:
      queue = Queue()
      
      if message.text == 'Начать игру':
-          methods_free.free_update(message.from_user.id)
+          if methods_free.free_check(message.from_user.id) is True:
+               return None
           
+          methods_free.free_update(message.from_user.id)
           if queue.is_empty() is True: # Очередь пуста
                queue.add((message.from_user.id, message.from_user.full_name)) # Добавляю в очередь
                return await message.reply(
@@ -30,15 +32,13 @@ async def echo(message: Message) -> None | SendMessage:
                )
                
           player_id, player_name = queue.remove() # Очищаю очередь
-          
           logger.info(
               f'User {message.from_user.id}-{message.from_user.full_name} started game with {player_id}-{player_name}'
           )
           
           # Добавляю игроков в словарь геймеров чтобы пользовать этим при завершении игры
           methods_free.update_gamers(
-               first_id=message.from_user.id,
-               second_id=player_id
+               players_id=[message.from_user.id, player_id]
           )
           # Сохраняю данные о игре
           data = methods_game.insert_data(
@@ -59,27 +59,19 @@ async def echo(message: Message) -> None | SendMessage:
           )  # Отправляю сообщение обоим игрокам о том за кого кого они играют и кто первый ходит
           
      if message.text == 'Завершить игру':
+          if methods_free.free_check(message.from_user.id) is False:
+               return None
+          
           gamer_two = methods_free.check_gamer(message.from_user.id)  # Достаю id второго игрока
           game_id = methods_game.get_game_id(message.from_user.id)
           
           logger.info(
                f'User {message.from_user.id}-{message.from_user.full_name} finished game-{game_id}'
           )
-          
-          methods_free.free_update(
-               id=[message.from_user.id, gamer_two], 
-               mode='remove'
-          )  # Удаляю игроков онлайна
-          methods_free.update_gamers(
-               first_id=message.from_user.id,
-               second_id=gamer_two,
-               mode='remove'
-          ) # Удаляю игроков из словаря геймеров
-          await clear_data(
+          await clear_users_update(
                players_id=[message.from_user.id, gamer_two],
                game_id=game_id
-          )  # Очищаю данных о игре
-          
+          )
           await double_send(
                players_id=[message.from_user.id, gamer_two],
                reply_text=f'Игра завершена досрочно игроком {message.from_user.full_name}.',
@@ -87,11 +79,15 @@ async def echo(message: Message) -> None | SendMessage:
           )
           
      if message.text == 'Выход':
+          if methods_free.free_check(message.from_user.id) is False:
+               return None
+          
           player_id, _ = queue.remove()  # Удаляю игрока из очереди
           methods_free.free_update(
                id=player_id,
                mode='remove'
           ) # Удаляю из онлайна
+          
           
           await message.reply(
                text='Вы вышли из очереди.',

@@ -8,10 +8,10 @@ from keyboards import get_reply_markup, Buttons
 from models import methods_game, methods_free
 from utils import (
      analysis_game_state, 
-     clear_data, 
      double_send,
      edit_inline_button,
-     double_delete
+     double_delete,
+     clear_users_update
 )
 
 
@@ -72,7 +72,7 @@ async def callback_query_handler(
                players_id=list(game.players.keys()),
                reply_markup=get_reply_markup(Buttons.START_GAME_BUTTON)
           )
-          return await clear_data(
+          return await clear_users_update(
                players_id=list(game.players.keys()),
                game_id=game.game_id
           )

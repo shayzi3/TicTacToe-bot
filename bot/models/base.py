@@ -84,7 +84,7 @@ class MethodsForGame:
 class MethodsForFree:
      
      @staticmethod
-     def free_check(id: int) -> None:
+     def free_check(id: int) -> bool:
           return id in Select(Free).where().one().players_in_online
      
      @staticmethod
@@ -99,11 +99,11 @@ class MethodsForFree:
           
           if mode == 'append':
                for _id in id:
-                    free.append(_id)
+                    free.append(int(_id))
           else:
                try:
                     for _id in id:
-                         free.remove(_id)
+                         free.remove(int(_id))
                except:
                     return None
           return Update(Free).values(players_in_online=free)
@@ -111,21 +111,20 @@ class MethodsForFree:
      
      @staticmethod
      def update_gamers(
-          first_id: int,
-          second_id: int,
+          players_id: list[int],
           mode: str = 'append'
      ) -> None:
           free = Select(Free).where().one().gamers
           
           if mode == 'append':
                free.update({
-                    str(first_id): second_id,
-                    str(second_id): first_id
+                    str(players_id[0]): players_id[1],
+                    str(players_id[1]): players_id[0]
                })
           else:
                try:
-                    del free[str(first_id)]
-                    del free[str(second_id)]
+                    del free[str(players_id[0])]
+                    del free[str(players_id[1])]
                except KeyError:
                     return None
           return Update(Free).values(gamers=free)
